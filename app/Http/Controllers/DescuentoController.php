@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Descuento;
+use Auth;
 
 class DescuentoController extends Controller
 {
@@ -24,6 +25,7 @@ class DescuentoController extends Controller
      */
     public function create()
     {
+        $this->addCountVisit();
         $descuentos=Descuento::Paginate(4);
         return view('descuento.create',['descuentos'=>$descuentos]);
     }
@@ -62,6 +64,7 @@ class DescuentoController extends Controller
      */
     public function edit($id)
     {
+        $this->addCountVisit();
         $descuentos=Descuento::Paginate(4);
         $descuento=Descuento::findOrFail($id);
         return view('descuento.edit',['descuento'=>$descuento],['descuentos'=>$descuentos]);
@@ -95,5 +98,8 @@ class DescuentoController extends Controller
         $descuento = Descuento::findOrFail($id);
         $descuento->delete();
         return redirect()->route('descuento.create');
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(7);
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Descuento;
 use App\Models\Pago;
 use App\Models\Detalle_compra;
 use App\Models\Reserva;
+use Auth;
 
 class Detalle_ventaController extends Controller
 {
@@ -29,6 +30,7 @@ class Detalle_ventaController extends Controller
      */
     public function create($id)
     {
+        $this->addCountVisit();
         $venta = Compra::findOrFail($id);
         $repuestos = Repuesto::all();
         $descuentos = Descuento::all();
@@ -184,5 +186,8 @@ class Detalle_ventaController extends Controller
         $repuesto->save();
         $detalleVenta->delete();
         return redirect()->route('detalle_venta.create',[$venta_id]);
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(4);
     }
 }

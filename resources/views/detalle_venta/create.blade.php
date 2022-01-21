@@ -76,5 +76,8 @@
       <button class="btn btn-dark my-2 my-sm-0" type="submit">FINALIZAR VENTA</button>
   </form>
 </div>
+<footer class="page-footer font-small blue pt-4">
+<div class="alert alert-dark" role="alert">{{Auth()->user()->showCounter(4)}}</div>
+</footer>
 
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Http\Requests\PersonaRequest;
+use Auth;
 
 class ClienteController extends Controller
 {
@@ -15,6 +16,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
+        $this->addCountVisit();
         $clientes=Persona::where('tipo','C')->Paginate(7);
         return view('cliente.index',['clientes'=>$clientes]);
     }
@@ -26,6 +28,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
+        $this->addCountVisit();
         return view('cliente.create');
     }
 
@@ -67,6 +70,7 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
+        $this->addCountVisit();
         $cliente=Persona::findOrFail($id);
         return view('cliente.edit',['cliente'=>$cliente]);
     }
@@ -115,5 +119,8 @@ class ClienteController extends Controller
             $clientes=Persona::where('tipo','C')->where('apellidos','like',"%$dato%")->Paginate(7);
         } 
         return view('cliente.index',['clientes'=>$clientes]); 
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(2);
     }
 }

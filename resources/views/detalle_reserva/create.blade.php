@@ -72,5 +72,8 @@
       <button class="btn btn-dark my-2 my-sm-0" type="submit">FINALIZAR RESERVA</button>
   </form>
 </div>
+<footer class="page-footer font-small blue pt-4">
+<div class="alert alert-dark" role="alert">{{Auth()->user()->showCounter(5)}}</div>
+</footer>
 
 @endsection

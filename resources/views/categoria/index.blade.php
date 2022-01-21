@@ -20,5 +20,3 @@
   {{$categorias->links('herramientas.paginacion')}}
   </tbody>
 </table>
-
-<div class="alert alert-dark" role="alert">{{Auth()->user()->showCounter(1)}}</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pago;
+use Auth;
 
 class PagoController extends Controller
 {
@@ -24,6 +25,7 @@ class PagoController extends Controller
      */
     public function create()
     {
+        $this->addCountVisit();
         $pagos=Pago::Paginate(4);
         return view('pago.create',['pagos'=>$pagos]);
     }
@@ -61,6 +63,7 @@ class PagoController extends Controller
      */
     public function edit($id)
     {
+        $this->addCountVisit();
         $pagos=Pago::Paginate(4);
         $pago=Pago::findOrFail($id);
         return view('pago.edit',['pago'=>$pago],['pagos'=>$pagos]);
@@ -93,5 +96,8 @@ class PagoController extends Controller
         $pago = Pago::findOrFail($id);
         $pago->delete();
         return redirect()->route('pago.create');
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(6);
     }
 }

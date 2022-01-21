@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pedido;
 use App\Models\Repuesto;
 use App\Models\Detalle_pedido;
+use Auth;
 
 class Detalle_pedidoController extends Controller
 {
@@ -26,6 +27,7 @@ class Detalle_pedidoController extends Controller
      */
     public function create($id)
     {
+        $this->addCountVisit();
         $pedido = Pedido::findOrFail($id);
         $repuestos = Repuesto::all();
       
@@ -114,5 +116,8 @@ class Detalle_pedidoController extends Controller
         $repuesto->save();
         $detallePedido->delete();
         return redirect()->route('detalle_pedido.create',[$pedido_id]);
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(3);
     }
 }

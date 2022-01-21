@@ -60,5 +60,8 @@
 <div id="borde">
       <a href=" {{route('pedido.edit',[$pedido->id]) }}" class="btn btn-dark my-2 my-sm-0">FINALIZAR PEDIDO</a>
 </div>
+<footer class="page-footer font-small blue pt-4">
+<div class="alert alert-dark" role="alert">{{Auth()->user()->showCounter(3)}}</div>
+</footer>
 
 @endsection

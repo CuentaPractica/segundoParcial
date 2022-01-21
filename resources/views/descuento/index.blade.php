@@ -22,3 +22,6 @@
   {{$descuentos->links('herramientas.paginacion')}}
   </tbody>
 </table>
+<footer class="page-footer font-small blue pt-4">
+<div class="alert alert-dark" role="alert">{{Auth()->user()->showCounter(7)}}</div>
+</footer>

@@ -7,11 +7,13 @@ use App\Models\Detalle_compra;
 use App\Models\Compra;
 use DB;
 Use Carbon\Carbon;
+use Auth;
 
 class ReporteController extends Controller
 {
     public function productos()
     {
+        $this->addCountVisit();
         $repuestos=Detalle_compra::groupBy('idRepuesto')->select('idRepuesto',DB::raw('sum(cantidad) as cantidad'))
                                                         ->orderBy('cantidad','desc')->take(5)->get();
 
@@ -28,6 +30,7 @@ class ReporteController extends Controller
 
     public function ventasActuales()
     {
+        $this->addCountVisit();
         $fecha = Carbon :: now ();
         $ventasE=Compra::whereDate('created_at',$fecha)
                          ->join('pagos','compras.idPago','=', 'pagos.id')->where('pagos.tipoPago','Efectivo')->paginate(5);
@@ -42,6 +45,7 @@ class ReporteController extends Controller
     }
 
     public function ventasG(){
+        $this->addCountVisit();
         $montlyCounts=Compra::select(
             DB::raw('EXTRACT(MONTH FROM created_at) AS month'), 
             DB::raw('COUNT(1) as cantidad'))
@@ -57,5 +61,8 @@ class ReporteController extends Controller
         $counts = json_encode($counts);
         return view('reporte.ventasG',compact('counts'));
 
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(8);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reserva;
+use Auth;
 
 class ReservaController extends Controller
 {
@@ -14,6 +15,7 @@ class ReservaController extends Controller
      */
     public function index()
     {
+        $this->addCountVisit();
         $reservas = Reserva::Paginate(7);
         return view('reserva.index',['reservas'=>$reservas]);
     }
@@ -25,6 +27,7 @@ class ReservaController extends Controller
      */
     public function create($id)
     {
+        $this->addCountVisit();
         $reserva = new Reserva();
         $reserva->idCliente= $id;
         $reserva->idEncargado= auth()->user()->personas->id;
@@ -87,5 +90,8 @@ class ReservaController extends Controller
         }
         $reserva->delete();
         return redirect()->route('reserva.index');
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(5);
     }
 }

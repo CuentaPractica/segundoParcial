@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pedido;
 use App\Models\Repuesto;
 use App\Models\Detalle_pedido;
+use Auth;
 
 class PedidoController extends Controller
 {
@@ -16,6 +17,7 @@ class PedidoController extends Controller
      */
     public function index()
     {
+        $this->addCountVisit();
         $pedidos = Pedido::Paginate(7);
         return view('pedido.index',['pedidos'=>$pedidos]);
     }
@@ -27,6 +29,7 @@ class PedidoController extends Controller
      */
     public function create($id)
     {
+        $this->addCountVisit();
         $pedido = new Pedido();
         $pedido->idProveedor= $id;
         $pedido->montoTotal= 0;
@@ -65,6 +68,7 @@ class PedidoController extends Controller
      */
     public function edit($id)
     {
+        $this->addCountVisit();
         $pedido = Pedido::findOrFail($id);
         $pedido->montoTotal = Detalle_pedido::where('idPedido',$id)->sum('precioTotal');
         $pedido->save();
@@ -102,5 +106,8 @@ class PedidoController extends Controller
         }
         $pedido->delete();
         return redirect()->route('pedido.index');
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(3);
     }
 }

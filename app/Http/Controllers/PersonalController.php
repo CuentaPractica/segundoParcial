@@ -7,6 +7,7 @@ use App\Models\Persona;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\PersonalController;
+use Auth;
 
 class PersonalController extends Controller
 {
@@ -17,6 +18,7 @@ class PersonalController extends Controller
      */
     public function index()
     {
+        $this->addCountVisit();
         $personal=Persona::where('tipo','E')->orWhere('tipo','A')->Paginate(7);
         return view('personal.index',['personal'=>$personal]);
     }
@@ -28,6 +30,7 @@ class PersonalController extends Controller
      */
     public function create()
     {
+        $this->addCountVisit();
         return view('personal.create');
     }
 
@@ -76,6 +79,7 @@ class PersonalController extends Controller
      */
     public function edit($id)
     {
+        $this->addCountVisit();
         $personal=Persona::findOrFail($id);
         return view('personal.edit',['personal'=>$personal]);
     }
@@ -120,5 +124,8 @@ class PersonalController extends Controller
         $personal = Persona::findOrFail($id);
         $personal->delete();
         return redirect()->route('personal.index');
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(2);
     }
 }

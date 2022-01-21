@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Repuesto;
 use App\Models\Marca;
 use App\Models\Categoria;
+use Auth;
 
 class RepuestoController extends Controller
 {
@@ -16,6 +17,7 @@ class RepuestoController extends Controller
      */
     public function index()
     {
+        $this->addCountVisit();
         $repuestos = Repuesto::Paginate(7);
         return view('repuesto.index',['repuestos'=>$repuestos]);
     }
@@ -27,6 +29,7 @@ class RepuestoController extends Controller
      */
     public function create()
     {
+        $this->addCountVisit();
         $marcas = Marca::all();
         $categorias = Categoria::all();
         return view('repuesto.create',['marcas'=>$marcas,'categorias'=>$categorias]);
@@ -69,6 +72,7 @@ class RepuestoController extends Controller
      */
     public function edit($id)
     {
+        $this->addCountVisit();
         $marcas = Marca::all();
         $categorias = Categoria::all();
         $repuesto=Repuesto::findOrFail($id);
@@ -106,5 +110,8 @@ class RepuestoController extends Controller
         $repuesto = Repuesto::findOrFail($id);
         $repuesto->delete();
         return redirect()->route('repuesto.index');
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(1);
     }
 }

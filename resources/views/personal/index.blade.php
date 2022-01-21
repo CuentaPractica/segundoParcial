@@ -40,5 +40,8 @@
   </tbody>
 </table>
 </div>
+<footer class="page-footer font-small blue pt-4">
+<div class="alert alert-dark" role="alert">{{Auth()->user()->showCounter(2)}}</div>
+</footer>
 </div>
 @endsection

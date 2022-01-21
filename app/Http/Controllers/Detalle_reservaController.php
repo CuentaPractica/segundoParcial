@@ -7,6 +7,7 @@ use App\Models\Reserva;
 use App\Models\Repuesto;
 use App\Models\Descuento;
 use App\Models\Detalle_Reserva;
+use Auth;
 
 class Detalle_reservaController extends Controller
 {
@@ -27,6 +28,7 @@ class Detalle_reservaController extends Controller
      */
     public function create($id)
     {
+        $this->addCountVisit();
         $reserva = Reserva::findOrFail($id);
         $repuestos = Repuesto::all();
         $descuentos = Descuento::all();
@@ -114,5 +116,8 @@ class Detalle_reservaController extends Controller
         $detalleReserva = Detalle_reserva::findOrFail($id);
         $detalleReserva->delete();
         return redirect()->route('detalle_reserva.create',[$reserva_id]);
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(5);
     }
 }

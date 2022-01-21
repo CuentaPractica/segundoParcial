@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Http\Requests\PersonaRequest;
+use Auth;
 
 class ProveedorController extends Controller
 {
@@ -15,6 +16,7 @@ class ProveedorController extends Controller
      */
     public function index()
     {
+        $this->addCountVisit();
         $proveedores=Persona::where('tipo','P')->Paginate(7);
         return view('proveedor.index',['proveedores'=>$proveedores]);
     }
@@ -26,6 +28,7 @@ class ProveedorController extends Controller
      */
     public function create()
     {
+        $this->addCountVisit();
         return view('proveedor.create');
     }
 
@@ -69,6 +72,7 @@ class ProveedorController extends Controller
      */
     public function edit($id)
     {
+        $this->addCountVisit();
         $proveedor=Persona::findOrFail($id);
         return view('proveedor.edit',['proveedor'=>$proveedor]);
     }
@@ -119,5 +123,8 @@ class ProveedorController extends Controller
         $proveedor = Persona::findOrFail($id);
         $proveedor->delete();
         return redirect()->route('proveedor.index');
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(2);
     }
 }

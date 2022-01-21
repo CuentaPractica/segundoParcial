@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Compra;
 use App\Models\Detalle_compra;
 use App\Models\Repuesto;
+use Auth;
 
 class VentaController extends Controller
 {
@@ -16,6 +17,7 @@ class VentaController extends Controller
      */
     public function index()
     {
+        $this->addCountVisit();
         $ventas = Compra::Paginate(7);
         return view('venta.index',['ventas'=>$ventas]);
     }
@@ -27,6 +29,7 @@ class VentaController extends Controller
      */
     public function create($id)
     {
+        $this->addCountVisit();
         $venta = new Compra();
         $venta->idCliente= $id;
         $venta->idEncargado= auth()->user()->personas->id;
@@ -103,5 +106,8 @@ class VentaController extends Controller
         }
         $venta->delete();
         return redirect()->route('venta.index');
+    }
+    private function addCountVisit(){
+        Auth::user()->countPage(4);
     }
 }

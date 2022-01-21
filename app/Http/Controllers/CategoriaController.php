@@ -26,7 +26,6 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $this->addCountVisit();
         $categorias=Categoria::Paginate(4);
         return view('categoria.create',['categorias'=>$categorias]);
     }
@@ -98,7 +97,4 @@ class CategoriaController extends Controller
         return redirect()->route('categoria.create');
     }
 
-    private function addCountVisit(){
-        Auth::user()->countPage(1);
-    }
 }
