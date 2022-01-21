@@ -17,6 +17,8 @@ use App\Http\Controllers\Detalle_ventaController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\Detalle_reservaController;
 use App\Http\Controllers\ReporteController;
+use App\Models\Persona;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,22 @@ use App\Http\Controllers\ReporteController;
 |
 */
 
+Route::get('/datos', function () {
+    $personal= new Persona();
+    $personal->nombre= 'Luisa';
+    $personal->apellidos= 'Mamani Gutierrez';
+    $personal->CI= '8945632';
+    $personal->telefono= '74532185';
+    $personal->direccion= 'Ayacucjo';
+    $personal->tipo= 'A';
+    $personal->save();
+
+    $user=new User();
+    $user->email='luisa@gmail.com';
+    $user->password=bcrypt('12345');
+    $user->idPersona=$personal->id;
+    $user->save();
+});
 Route::get('/', function () {
     return view('auth.login');
 });

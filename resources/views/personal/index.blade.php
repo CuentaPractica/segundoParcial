@@ -29,7 +29,7 @@
          <td>{{ $person->telefono }}</td>
          <td>{{ $person->direccion }}</td>
          <td>{{ $person->tipo=='E'?'Encargado':'Administrador' }}</td>
-         <td>{{ $person->users->email}}</td>
+         <td>{{ $person->usuarios->email}}</td>
          <td>
             <a href=" {{route('personal.edit',[$person->id]) }}" class="btn btn-outline-warning btn-m" ><span><i class="fa fa-edit" style="margin-left:-5px;"></i></span></a>
             <a href=" {{route('personal.destroy',[$person->id]) }}" class="btn btn-outline-danger btn-m"><span><i class="	fas fa-trash-alt" style="margin-left:-5px;"></i></span></a>

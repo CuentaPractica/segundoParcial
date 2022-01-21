@@ -11,7 +11,7 @@ class Persona extends Model
     protected $table='personas';
     protected $fillable=['nombre','apellidos','CI','telefono','empresa','direccion','tipo'];
 
-    public function users()
+    public function usuarios()
     {
         return $this->hasOne(User::class, 'idPersona');
     }

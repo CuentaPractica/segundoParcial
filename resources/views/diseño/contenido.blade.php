@@ -30,8 +30,8 @@
 
       <ul class="nav justify-content-end">
 	  <li class="nav-item">
-    <a class="nav-link" href="{{route('home')}}"><span><i class="fas fa-house" style="margin-left:-5px;"></i></span>Home</a>
-  </li>
+        <a class="nav-link" href="{{route('home')}}"><span><i class="fas fa-house" style="margin-left:-5px;"></i></span>Home</a>
+      </li>
         
   <li class="nav-item">
     <a class="nav-link" href="{{route('logout')}}"><span><i class="fa fa-sign-out" style="margin-left:-5px;"></i></span>Salir</a>
