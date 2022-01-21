@@ -37,9 +37,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
                 </form>
-                <div class="col-12 forgot">
-                    <a href="#">Recordar contrasena?</a>
-                </div>
+            
             </div>
         </div>
     </div>
